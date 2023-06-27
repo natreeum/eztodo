@@ -11,10 +11,13 @@ datasource db {
 }
 
 model User {
-  id       String @id
-  username String @default("Unnamed")
-  password String
-  todos    Todo[]
+  id           String        @id
+  username     String        @default("Unnamed")
+  password     String
+  todos        Todo[]
+  dailyTodos   DailyTodo[]
+  weeklyTodos  WeeklyTodo[]
+  monthlyTodos MonthlyTodo[]
 }
 
 model Todo {
@@ -24,4 +27,25 @@ model Todo {
   date    String
   content String
   isDone  Boolean @default(false)
+}
+
+model DailyTodo {
+  id      Int    @id @default(autoincrement())
+  User    User   @relation(fields: [userId], references: [id])
+  userId  String
+  content String
+}
+
+model WeeklyTodo {
+  id      Int    @id @default(autoincrement())
+  User    User   @relation(fields: [userId], references: [id])
+  userId  String
+  content String
+}
+
+model MonthlyTodo {
+  id      Int    @id @default(autoincrement())
+  User    User   @relation(fields: [userId], references: [id])
+  userId  String
+  content String
 }

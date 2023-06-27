@@ -1,6 +1,6 @@
 import axios from "axios";
 import config from "../config";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
@@ -13,12 +13,15 @@ export default function SignIn() {
       password,
     });
     if (signInRes.status === 200 && signInRes.data.status === true) {
-      console.log(signInRes);
       window.sessionStorage.setItem("id", signInRes.data.data.id);
       window.sessionStorage.setItem("username", signInRes.data.data.username);
       nav(`/cal/${signInRes.data.data.id}`);
-    } else alert("Sign In Failed. Try Againg");
+    } else alert("Sign In Failed. Try Again");
   }
+  useEffect(() => {
+    const userId = window.sessionStorage.getItem("id");
+    if (userId) nav(`/cal/${userId}`);
+  }, []);
   return (
     <div>
       <span>ID : </span>

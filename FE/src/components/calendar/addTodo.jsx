@@ -14,7 +14,11 @@ export default function NewTodo(props) {
       })
       .then((res) => {
         if (res.status === 201) {
-          axios.post(`${config.HOST}/todo/list`, { userId, date: props.date });
+          axios
+            .post(`${config.HOST}/todo/list`, { userId, date: props.date })
+            .then((res) => {
+              if (res.status === 200) props.setTodos(res.data);
+            });
         }
       });
   }
@@ -27,7 +31,9 @@ export default function NewTodo(props) {
           if (e.target.value.length !== 0) setContent(e.target.value);
         }}
       />
-      <button id="btn_add_Todo">add</button>
+      <button id="btn_add_Todo" onClick={addTodoBtnHandler}>
+        add
+      </button>
     </div>
   );
 }

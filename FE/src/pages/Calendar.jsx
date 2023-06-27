@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Daily from "../components/calendar/daily";
@@ -10,14 +10,18 @@ import Todos from "../components/calendar/todos";
 export default function UserCalendar() {
   const { userid } = useParams();
   const [val, setVal] = useState(new Date());
+  const nav = useNavigate();
+  function signoutHandler() {
+    window.sessionStorage.removeItem("id");
+    window.sessionStorage.removeItem("username");
+    nav("/");
+  }
   return (
     <div>
       <div>This is Calendar Page</div>
-      <div>Welcome, {userid}!</div>
-      <div>
-        Selected Data :
-        {`${val.getFullYear()}년 ${val.getMonth() + 1}월 ${val.getDate()}일`}
-      </div>
+      <span>Welcome, {userid}!</span>
+      <button onClick={signoutHandler}>Sign Out</button>
+      <br></br>
       <Calendar onChange={setVal} value={val} />
       <Todos date={val}></Todos>
       {"--------------------"}
