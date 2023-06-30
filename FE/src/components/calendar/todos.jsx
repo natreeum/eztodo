@@ -7,7 +7,7 @@ import Todo from "./todo";
 export default function Todos(props) {
   const userId = window.sessionStorage.getItem("id");
   const [todos, setTodos] = useState([]);
-  function asdf() {
+  function updateTodo() {
     axios
       .post(`${config.HOST}/todo/list`, {
         userId,
@@ -23,7 +23,7 @@ export default function Todos(props) {
   }
 
   useEffect(() => {
-    asdf();
+    updateTodo();
   }, [props.date]);
   return (
     <div>
